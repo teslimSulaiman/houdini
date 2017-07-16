@@ -17,7 +17,7 @@ public class HoudiniDbHelper extends SQLiteOpenHelper {
     /**
      * Database version. If you change the database schema, you must increment the database version.
      */
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     /**
      * Constructs a new instance of {@link HoudiniDbHelper}.
@@ -33,9 +33,8 @@ public class HoudiniDbHelper extends SQLiteOpenHelper {
 
     final String SQL_CREATE_TABLE = "CREATE TABLE " + StateEntry.TABLE_NAME + " (" +
             StateEntry._ID + " INTEGER PRIMARY KEY, " +
-            StateEntry.COLUMN_TITLE + " TEXT NOT NULL, " +
-            StateEntry.COLUMN_DATE + " TEXT NOT NULL, " +
-            StateEntry.COLUMN_ORDER_BY + " TEXT NOT NULL " + " );";
+            StateEntry.COLUMN_TITLE + " TEXT NOT NULL " +
+              "UNIQUE (" + StateEntry.COLUMN_TITLE + ") ON CONFLICT REPLACE);";
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + StateEntry.TABLE_NAME;

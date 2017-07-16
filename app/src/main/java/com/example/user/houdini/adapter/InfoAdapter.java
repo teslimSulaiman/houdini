@@ -78,6 +78,7 @@ public  class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.MyViewHolder>
         // Determine the values of the wanted data
         final int id = mCursor.getInt(idIndex);
         String posterPath = mCursor.getString(posterIndex);
+        holder.itemView.setTag(id);
         holder.textView.setText(posterPath);
 
 

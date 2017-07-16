@@ -178,8 +178,34 @@ public class HoudiniProvider extends ContentProvider {
         return tasksDeleted;
     }
 
+    private int updateTask(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+
+        SQLiteDatabase database = houdiniDbHelper.getWritableDatabase();
+
+        // Perform the update on the database and get the number of rows affected
+        int rowsUpdated = database.update(HoudiniContract.StateEntry.TABLE_NAME, values, selection, selectionArgs);
+
+        if (rowsUpdated != 0 && getContext() != null) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        // Return the number of rows updated
+        return rowsUpdated;
+    }
+
     @Override
-    public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String s, @Nullable String[] strings) {
-        return 0;
+    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        int match = sUriMatcher.match(uri);
+        switch (match) {
+            case INFOS:
+                return updateTask(uri, values, selection, selectionArgs);
+            case INFO_ID:
+                String id = uri.getPathSegments().get(1);
+                String mSelection = HoudiniContract.StateEntry._ID + "=?";
+                String [] mSelectionArgs = new String []{id};
+
+                return updateTask(uri, values, mSelection, mSelectionArgs);
+            default:
+                throw new IllegalArgumentException("Update is not supported for " + uri);
+        }
     }
 }

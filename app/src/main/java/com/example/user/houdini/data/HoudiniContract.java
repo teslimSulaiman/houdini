@@ -46,8 +46,7 @@ public class HoudiniContract {
         public static final String CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH;
         public static final String COLUMN_TITLE = "title";
-        public static final String COLUMN_DATE = "date_added";
-        public static final String COLUMN_ORDER_BY = "order_by";
+
 
     }
 }
